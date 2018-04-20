@@ -2,50 +2,52 @@
 include('../part_header.php');
 if(!$user->isLogged()) header('Location: login.php');
 
-if(isset($_GET['delpost'])){ 
+if(isset($_GET['delpost'])){
 	$sql = $db->prepare('DELETE FROM blog_post WHERE id = :id') ;
 	$sql->execute(array(':id' => $_GET['delpost']));
 	header('Location: index.php?action=deleted');
 	exit;
-}	
+}
 ?>
-<div class="admin-posts">
+<div class="admin-posts container">
   <table>
     <tr>
-      <th>Title</th>
-      <th>Date</th>
-      <th>Action</th>
+      <th>Název článku</th>
+      <th>Datum</th>
+			<th>Urivek</th>
+      <th>Akce</th>
     </tr>
     <tr>
       	<?php
 		try {
-			$stmt = $db->query('SELECT id, title, date FROM blog_post ORDER BY id DESC');
+			$stmt = $db->query('SELECT * FROM blog_post ORDER BY id DESC');
 			while($row = $stmt->fetch()){
 				echo '<tr>';
 				echo '<td>'.$row['title'].'</td>';
-				echo '<td>'.date('d/m/y H:i:s', strtotime($row['date'])).'</td>';
+				echo '<td>'.datum(date('d.F.Y', strtotime($row['date']))).'</td>';
+				echo '<td>'.$row['short'].'</td>';
 				?>
   				<td>
-  					<a href="edit-post.php?id=<?php echo $row['id'];?>">Edit</a> | 
-  					<a href="javascript:delPost('<?php echo $row['id'];?>','<?php echo $row['title'];?>')">Delete</a>
+  					<a href="edit-post.php?id=<?php echo $row['id'];?>">Upravit</a> |
+  					<a href="javascript:delPost('<?php echo $row['id'];?>','<?php echo $row['title'];?>')">Smazat</a>
   				</td>
-				<?php 
+				<?php
 				echo '</tr>';
 			}
 		} catch(PDOException $e) {
-		    echo 'we can´t connet to sql.';
+		    echo 'Nelze se připojit k Databázi.';
 		}
 	?>
     </tr>
   </table>
-  <?php   
+  <?php
     //Write message if eddit or delete
-    if(isset($_GET['action'])){ 
-	     echo '<h3>Post '.$_GET['action'].'.</h3>'; 
+    if(isset($_GET['action'])){
+	     echo '<h3>Příspěvek '.$_GET['action'].'.</h3>';
     }
-    if(isset($_GET['setting'])){ 
-	     echo '<h3>Setting '.$_GET['setting'].'.</h3>'; 
+    if(isset($_GET['setting'])){
+	     echo '<h3>Setting '.$_GET['setting'].'.</h3>';
     }?>
-  <p><a href='add-post.php'>Add Post</a></p>
+  <p><a href='add-post.php'>Přidat příspěvek</a></p>
 </div>
 <?php include('../part_footer.php'); ?>

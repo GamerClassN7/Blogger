@@ -13,10 +13,8 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 			toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
 		});
 	</script>
-	<div class="admin-posts">
-		<?php include('../admin/menu.php'); ?>
-		<p><a href="./">Blog Admin Index</a></p>
-		<h2>Přidat Příspěvek:</h2>
+	<div class="admin-posts container">
+		<h2>Přidat příspěvek:</h2>
 		<?php
 		//Odeslání příspěvku
 		if(isset($_POST['submit'])){
@@ -24,16 +22,16 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 			extract($_POST);
 			//Kontrola vyplnění formulářů
 			if($title =='')  {$error[] = 'Vložte titulek!';}
-			if($desc =='')  {$error[] = 'Vložte Popisek';}
+			if($short =='')  {$error[] = 'Vložte Popisek';}
 			if($body =='')  {$error[] = 'Vložte obsah !';}
 			if(!isset($error)){
 				try {
 					//Odešli QUERY a přejdi na index
-				  $sql = $db->prepare('INSERT INTO blog_post (`title`, `body`, `desc`, `date`) VALUES (:title, :body, :desc, :date)') ;
+				  $sql = $db->prepare('INSERT INTO blog_post (`title`, `body`, `short`, `date`) VALUES (:title, :body, :short, :date)') ;
 					$sql->execute(array(
 						':title' => $title,
 						':body' => $body,
-						':desc' => $desc,
+						':short' => $short,
 						':date' => date('d/m/y H:i:s')
 					));
 					header('Location: index.php?action=added');
@@ -48,17 +46,17 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 			}
 		} ?>
 		<form action='' method='post'>
-			<p><label>Title</label><br />
+			<p><label>Název článku</label><br />
 			<input type='text' name='title' value='<?php if(isset($error)){ echo $_POST['title'];}?>'></p>
 			<p>
-				<label>Description</label><br />
-				<textarea name='desc' cols='60' rows='10'><?php if(isset($error)){ echo $_POST['desc'];}?></textarea>
+				<label>Krátký popisek článku</label><br />
+				<textarea name='short' cols='60' rows='10'><?php if(isset($error)){ echo $_POST['short'];}?></textarea>
 			</p>
 			<p>
-				<label>Content</label><br />
+				<label>Obsah článku</label><br />
 				<textarea name='body' cols='60' rows='10'><?php if(isset($error)){ echo $_POST['body'];}?></textarea>
 			</p>
-			<input type='submit' name='submit' value='Submit'>
+			<input type='submit' name='submit' value='Publikovat příspěvek'>
 		</form>
 	</div>
 <?php include('../part_footer.php'); ?>

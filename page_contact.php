@@ -1,0 +1,21 @@
+<?php include('part_header.php');
+
+if (isset($_POST['name']) && $_POST['name'] != "") {
+	if (mailer($_POST['name'], $_POST['email'], $_POST['subject'], $_POST['message'])){
+		$message = "Ůspěšně odeláno :)";
+	}
+}?>
+
+<div class="contact container">
+  <h1>Kontakt</h1>
+  <form action="" class="contact_form" method="POST" accept-charset="UTF-8">
+    <input type="text" placeholder="Jméno" id="name" name="name"><br>
+    <input type="email" placeholder="" id="email" name="email" required><br>
+    <input type="text" placeholder="Předmět..." id="subject" name="subject" required><br>
+    <textarea type="text" placeholder="Zpráva..." id="message" name="message" required></textarea><br>
+    <input class="submit" type="submit" text="Odeslat" id="submit" name="submit">
+  </form>
+</div>
+<?php if (isset($message)) echo $message; ?>
+
+<?php include('part_footer.php'); ?>

@@ -1,7 +1,7 @@
 
 function delPost(id, title)
 {
-	if (confirm("Are you sure you want to delete '" + title + "'"))
+	if (confirm("Chcete opravdu smazat příspevek:'" + title + "'"))
 	{
 	  window.location.href = 'index.php?delpost=' + id;
 	}
