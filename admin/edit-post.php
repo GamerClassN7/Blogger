@@ -43,10 +43,10 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 				$desc = $_POST['desc'];
 				$body = $_POST['body'];
 				//Kontrola korespondujících hodnot
-				if($id =='') : $id = $row['id'];
-				if($title =='') : $title = $row['title'];
-				if($desc =='') :	$desc = $row['desc'];
-				if($body =='') : $body = $row['body'];
+				if($id =='') {$id = $row['id'];}
+				if($title =='')  {$title = $row['title'];}
+				if($desc =='') {$desc = $row['desc'];}
+				if($body =='') {$body = $row['body'];}
 				if(!isset($error)){
 					try {
 						//Odešli QUERY a přejdi na index
@@ -58,7 +58,9 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 							':id' => $id
 						));
 						header('Location: index.php?action=updated');
-					} catch(PDOException $e): echo $e->getMessage();
+					} catch(PDOException $e){
+						 echo $e->getMessage();
+					 }
 				}
 			} ?>
 			<form action='' method='post'>

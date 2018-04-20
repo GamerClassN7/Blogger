@@ -23,9 +23,9 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 			$_POST = array_map( 'stripslashes', $_POST );
 			extract($_POST);
 			//Kontrola vyplnění formulářů
-			if($title =='') : $error[] = 'Please enter the title.';
-			if($desc =='') : $error[] = 'Please enter the description.';
-			if($body =='') : $error[] = 'Please enter the content.';
+			if($title =='')  {$error[] = 'Vložte titulek!';}
+			if($desc =='')  {$error[] = 'Vložte Popisek';}
+			if($body =='')  {$error[] = 'Vložte obsah !';}
 			if(!isset($error)){
 				try {
 					//Odešli QUERY a přejdi na index
@@ -38,7 +38,7 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 					));
 					header('Location: index.php?action=added');
 					exit;
-				} catch(PDOException $e) : echo $e->getMessage();
+				} catch(PDOException $e)  {echo $e->getMessage();}
 			}
 		}
 		//Kontrola zda byly problémy s odeláním ? pokud ano vypiš je
