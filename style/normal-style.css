@@ -1,0 +1,62 @@
+p, h1, h2, h3, b, i{
+  padding: 0px;
+  margin: 0px;
+}
+
+html {
+  /*background: url(https://previews.123rf.com/images/hatza/hatza1308/hatza130800506/21394080-Teenage-seamless-background-Stock-Photo.jpg);*/
+  /*background: url(http://blogs.walkerart.org/teens/files/2012/11/collabo_drawing_1-337x450.jpg);*/
+  background: url("../image/background.png");
+  background-position: center;
+  background-size: cover;
+}
+
+body {
+  /*background: url(https://previews.123rf.com/images/hatza/hatza1308/hatza130800506/21394080-Teenage-seamless-background-Stock-Photo.jpg);*/
+  max-width: 940px;
+  margin: auto;
+  margin-top: 50px;
+}
+
+header{
+
+}
+
+article, .logo-text{
+
+  background-color: green;
+}
+
+.logo-text{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.container{
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.post, .contact{
+  background-color: red;
+}
+
+
+footer{
+  background-color: yellow;
+  bottom: opx;
+}
+
+.logo{
+  background-color: black;
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+}
+
+ul#adminmenu {
+    MARGIN: 0PX;
+}
+
