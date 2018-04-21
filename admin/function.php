@@ -9,9 +9,9 @@ class Password {
   }
 }
 
-class User extends Password{   
+class User extends Password{
     public function __construct($db){
-       parent::__construct(); 
+       parent::__construct();
        $this->_db = $db;
        $GLOBALS['db'] = $db;
     }
@@ -24,12 +24,12 @@ class User extends Password{
     public function get_Hashed_Password($username){
       try {
 			 $sql = $this->_db->prepare('SELECT password FROM blog_members WHERE username = :username');
-			 $sql->execute(array(':username' => $username));	
+			 $sql->execute(array(':username' => $username));
 			 $row = $sql->fetch();
 			 return $row['password'];
 		  } catch(PDOException $e) {
 		    echo '<p class="error">Nepodařilo se spojit s databází.</p>';
-		  } 
+		  }
     }
     public function login($username, $password) {
        $hashesPass = $this->get_Hashed_Password($username);
@@ -38,37 +38,50 @@ class User extends Password{
          return true;
        }
     }
-    public function logout(){    
+    public function logout(){
        session_destroy();
     }
 }
 class databas{
   public function setting($name, $value = '0'){
-    $result = $GLOBALS['db']->query("SELECT * FROM blog_setting WHERE name = '$name';");  
+    $result = $GLOBALS['db']->query("SELECT * FROM blog_setting WHERE name = '$name';");
     $row = $result->fetch();
     if ($value != '0'){
-      if (count($row['name']) == '1') {
+      if (count($row['name']) == 1) {
          try {
           $GLOBALS['db']->query("UPDATE blog_setting SET value = '$value' WHERE name = '$name';");
          } catch(PDOException $e) {
-      		echo $e->getMessage();	
+      		echo $e->getMessage();
         }
       } else {
         try {
           $GLOBALS['db']->query("INSERT INTO blog_setting (name, value) VALUES ('$name', '$value');");
         } catch(PDOException $e) {
-      		echo $e->getMessage();	
+      		echo $e->getMessage();
         }
         return $value;
       }
-        
+
     } else {
-      return $row['value']; 
+      return $row['value'];
     }
   }
 }
 
- 
+function mailer($from, $from_mail, $subject, $text){
+	$headers = "From: $from <$from_email>\r\n".
+						 "MIME-Version: 1.0" . "\r\n" .
+						 "Content-type: text/html; charset=UTF-8" . "\r\n";
+	mail(databas::setting('email'), $subject, $text, $headers);
+}
+
+function POST_TEST($name){
+	if (isset($_POST[$name]) && $_POST[$name] != "") :
+     return true ;
+     else :
+      return false;
+    endif;
+}
 function pathFile($path){
     if(file_exists($path)){
       return $path;
@@ -90,18 +103,25 @@ function pathFile($path){
             $i = 5;
           }
       }
-    }               
+    }
+}
+
+function datum($date){
+  $aj = array("January","February","March","April","May","June","July","August","September","October","November","December");
+  $cz = array("ledna","února","března","dubna","května","června","července","srpna","září","října","listopadu","prosince");
+  $datum = str_replace($aj, $cz, $date);
+  return $datum;
 }
 
 function blogposts(){
   try{
     $stmt = $GLOBALS['db']->query("SELECT * FROM blog_post ORDER BY id DESC");
-      while($row = $stmt->fetch()){ 
+      while($row = $stmt->fetch()){
         echo '<div class="post-container">';
           echo '<h1><a href="single.php?id='.$row['id'].'">'.$row['title'].'</a></h1>';
-          echo '<p>Posted on '.date('d/m/y H:i:s', strtotime($row['date'])).'</p>';
-          echo '<p>'.$row['desc'].'</p>';                
-          echo '<p><a href="single.php?id='.$row['id'].'">Read More</a></p>';                
+          echo '<div class="datum">'.datum(date('j. F Y', strtotime($row['date']))).'</div>';
+          echo $row['short'];
+          echo '<a href="single.php?id='.$row['id'].'" class="vice">Přečíst více</a>';
         echo '</div>';
         if (count($row)<1){
           echo 'Nic tu není';
@@ -116,29 +136,22 @@ function imageupload($file, $name){
  $valid_file = true;
  if($file['name'])
   {
-  	//if no errors...
   	if(!$file['error'])
   	{
-  		//now is the time to modify the future file name and validate the file
-  		if($file['size'] > (1024000)) //can't be larger than 1 MB
+  		if($file['size'] > (1024000)) // 1MB limit
   		{
   			$valid_file = false;
   			$message = 'Oops!  Your file\'s size is to large.';
   		}
-  		
-  		//if the file has passed the test
   		if($valid_file)
   		{
-  			//move it to where we want it to be
-  			move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT']. '/image/'. $name . '.png');
-  			$message = 'Congratulations!  Your file was accepted.';
+  			move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT']. '/image/'. $name);
+  			$message = 'šoupnuli jsme to na server';
   		}
   	}
-  	//if there is an error...
   	else
   	{
-  		//set that to be the returned message
-  		$message = 'Ooops!  Your upload triggered the following error:  '.$file['error'];
+  		$message = 'Ooops!  nešoupnuli jsme to na server protože:  '.$file['error'];
   	}
   }
 }
