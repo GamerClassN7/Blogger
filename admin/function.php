@@ -119,9 +119,15 @@ function blogposts(){
       while($row = $stmt->fetch()){
         echo '<div class="post-container">';
           echo '<h1><a href="single.php?id='.$row['id'].'">'.$row['title'].'</a></h1>';
+<<<<<<< HEAD
+          echo '<div class="datum">'.datum(date('j. F Y', strtotime($row['date']))).'</div>';
+          echo $row['short'];
+          echo '<a href="single.php?id='.$row['id'].'" class="vice">Přečíst více</a>';
+=======
           echo '<p>Publikováno '.datum(date('d.F.Y', strtotime($row['date']))).'</p>';
           echo '<p>'.$row['short'].'</p>';
           echo '<p><a href="single.php?id='.$row['id'].'">Read More</a></p>';
+>>>>>>> 292238a21a4566764950ca95b53ef46a7195a995
         echo '</div>';
         if (count($row)<1){
           echo 'Nic tu není';

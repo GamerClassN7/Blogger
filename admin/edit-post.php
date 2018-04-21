@@ -14,7 +14,11 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 		});
 	</script>
 	<div class="admin-posts container">
+<<<<<<< HEAD
+		<h1>Upravit příspěvek</h1>
+=======
 		<h2>Edit Post</h2>
+>>>>>>> 292238a21a4566764950ca95b53ef46a7195a995
 		<?php $_POST = array_map( 'stripslashes', $_POST );
 		extract($_POST);
 		if(isset($_POST['submit'])){
@@ -49,6 +53,18 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 			?>
 			<form action='' method='post'>
 				<input type='hidden' name='id' value='<?php echo $id; ?>'>
+<<<<<<< HEAD
+				<label>Nadpis</label>
+				<input type='text' name='title' value='<?php echo $title; ?>'>
+
+				<label>Krátký popisek příspěvku</label>
+				<textarea name='short' cols='60' rows='10'><?php echo $short; ?></textarea>
+
+				<label><h2>Obsah příspěvku</h2></label>
+				<textarea name='body' cols='60' rows='10'><?php echo $body; ?></textarea>
+
+				<input type='submit' name='submit' value='Aktualizovat článek'>
+=======
 				<p><label>Nadpis: </label><br />
 					<input type='text' name='title' value='<?php echo $title; ?>'></p>
 					<p>
@@ -60,6 +76,8 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 						<textarea name='body' cols='60' rows='10'><?php echo $body; ?></textarea>
 					</p>
 					<input type='submit' name='submit' value='Update'>
+>>>>>>> 292238a21a4566764950ca95b53ef46a7195a995
 				</form>
+				<div class="clear"></div>
 			</div>
 <?php include('../part_footer.php'); ?>

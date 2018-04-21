@@ -14,7 +14,11 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 		});
 	</script>
 	<div class="admin-posts container">
+<<<<<<< HEAD
+		<h1>Přidat příspěvek</h1>
+=======
 		<h2>Přidat příspěvek:</h2>
+>>>>>>> 292238a21a4566764950ca95b53ef46a7195a995
 		<?php
 		//Odeslání příspěvku
 		if(isset($_POST['submit'])){
@@ -32,7 +36,11 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 						':title' => $title,
 						':body' => $body,
 						':short' => $short,
+<<<<<<< HEAD
+						':date' => date('j. F Y')
+=======
 						':date' => date('d/m/y H:i:s')
+>>>>>>> 292238a21a4566764950ca95b53ef46a7195a995
 					));
 					header('Location: index.php?action=added');
 					exit;
@@ -46,6 +54,17 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 			}
 		} ?>
 		<form action='' method='post'>
+<<<<<<< HEAD
+			<label>Název článku</label>
+			<input type='text' name='title' value='<?php if(isset($error)){ echo $_POST['title'];}?>'></p>
+
+			<label>Krátký popisek článku</label>
+			<textarea name='short' cols='60' rows='2'><?php if(isset($error)){ echo $_POST['short'];}?></textarea>
+
+			<label><h2>Obsah článku</h2></label>
+			<textarea name='body' cols='60' rows='10'><?php if(isset($error)){ echo $_POST['body'];}?></textarea>
+
+=======
 			<p><label>Název článku</label><br />
 			<input type='text' name='title' value='<?php if(isset($error)){ echo $_POST['title'];}?>'></p>
 			<p>
@@ -56,7 +75,9 @@ if(!$user->isLogged()) header('Location: login.php'); ?>
 				<label>Obsah článku</label><br />
 				<textarea name='body' cols='60' rows='10'><?php if(isset($error)){ echo $_POST['body'];}?></textarea>
 			</p>
+>>>>>>> 292238a21a4566764950ca95b53ef46a7195a995
 			<input type='submit' name='submit' value='Publikovat příspěvek'>
 		</form>
+		<div class="clear"></div>
 	</div>
 <?php include('../part_footer.php'); ?>

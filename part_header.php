@@ -11,6 +11,7 @@
       <script src="<?php echo pathFile('js/js.js'); ?>"></script>
     <meta name="description" content="Free Web tutorials">
     <meta name="keywords" content="HTML,CSS,XML,JavaScript">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
     <header>
